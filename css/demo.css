@@ -1,0 +1,9 @@
+.error-tips {
+    position: fixed;
+    width: 250px;
+    left: 550px;
+}
+
+.item-height {
+    height: 800px;
+}
