@@ -21,8 +21,8 @@ angular.module("ef.demo").controller("Form2Ctrl", ["$scope", function($scope){
 
     $scope.isExistItemC = function(){
         vd.existItemC = false;
-        if(!!fd.itemA){
-            if(fd.itemA == 222){
+        if(!!fd.itemC){
+            if(fd.itemC == 222){
                 vd.existItemC = true;
             }
         }
