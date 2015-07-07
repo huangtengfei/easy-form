@@ -1,4 +1,4 @@
-angular.module("ef.demo", []).controller("FormCtrl", ["$scope", function($scope){
+angular.module("ef.demo").controller("Form1Ctrl", ["$scope", function($scope){
 
     $scope.formData = {};
     $scope.viewData = {};
@@ -89,7 +89,9 @@ angular.module("ef.demo", []).controller("FormCtrl", ["$scope", function($scope)
         if(!validate()){
             return;
         }
-        alert("save succeed!")
+        alert("form1 save succeed!")
     };
 
 }]);
+
+

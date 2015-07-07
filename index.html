@@ -9,41 +9,43 @@
     <script type="text/javascript" src="libs/jquery.min.js"></script>
     <script type="text/javascript" src="libs/angular.js"></script>
 
-    <script type="text/javascript" src="js/demo/form.js"></script>
+    <script type="text/javascript" src="js/demo/package.js"></script>
+    <script type="text/javascript" src="js/demo/form1.js"></script>
+    <script type="text/javascript" src="js/demo/form2.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
 </head>
-<body ng-app="ef">
-<div class="col-md-8">
-    <div ng-controller="FormCtrl" class="panel panel-default">
-        <div class="panel-heading">表单1</div>
+<body style="margin-top: 20px;" ng-app="ef">
+<div class="col-md-7">
+    <div ng-controller="Form1Ctrl" class="panel panel-default">
+        <div class="panel-heading">表单1（提交时验证）</div>
         <div class="panel-body">
-            <form class="form-horizontal">
-                <div class="col-md-8">
-                    <div class="form-group item-height" ng-class="{'has-error': viewData.item1ErrorCode!==0}">
+            <form class="form-horizontal" name="form1">
+                <div class="col-md-9">
+                    <div class="form-group required" ng-class="{'has-error': viewData.item1ErrorCode!==0}">
                         <label for="item1" class="col-md-2 control-label">item1</label>
                         <div class="col-md-6">
                             <input type="text" class="form-control" id="item1" ng-model="formData.item1"
-                                   placeholder="input item1" ng-focus="viewData.item1ErrorCode=0">
+                                   placeholder="必填，只能为字母，不能为aaa" ng-focus="viewData.item1ErrorCode=0">
                         </div>
                         <span class="col-md-4 form-control-static text-danger">
                             {{viewData.itemError[viewData.item1ErrorCode]}}
                         </span>
                     </div>
-                    <div class="form-group item-height" ng-class="{'has-error': viewData.item2ErrorCode!==0}">
+                    <div class="form-group" ng-class="{'has-error': viewData.item2ErrorCode!==0}">
                         <label for="item2" class="col-md-2 control-label">item2</label>
                         <div class="col-md-6">
                             <input type="text" class="form-control" id="item2" ng-model="formData.item2"
-                                   placeholder="input item2" ng-focus="viewData.item2ErrorCode=0">
+                                   placeholder="非必填，3个以上数字" ng-focus="viewData.item2ErrorCode=0">
                         </div>
                         <span class="col-md-4 form-control-static text-danger">
                             {{viewData.itemError[viewData.item2ErrorCode]}}
                         </span>
                     </div>
-                    <div class="form-group item-height" ng-class="{'has-error': viewData.item3ErrorCode!==0}">
+                    <div class="form-group required" ng-class="{'has-error': viewData.item3ErrorCode!==0}">
                         <label for="item3" class="col-md-2 control-label">item3</label>
                         <div class="col-md-6">
                             <input type="text" class="form-control" id="item3" ng-model="formData.item3"
-                                   placeholder="input item3" ng-focus="viewData.item3ErrorCode=0">
+                                   placeholder="必填，最大长度为5，不能为bbb" maxlength="5" ng-focus="viewData.item3ErrorCode=0">
                         </div>
                         <span class="col-md-4 form-control-static text-danger">
                             {{viewData.itemError[viewData.item3ErrorCode]}}
@@ -55,7 +57,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 error-tips" ng-if="errorTips.length>0">
+                <div class="col-md-3 error-tips" ng-if="errorTips.length>0">
                     <div class="list-group">
                         <a href="#" class="list-group-item active">
                             Error Tips
@@ -64,6 +66,66 @@
                                 ng-click="focusItem(tip)">
                             {{viewData.itemError[tip.errCode]}}
                         </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-5">
+    <div ng-controller="Form2Ctrl" class="panel panel-default">
+        <div class="panel-heading">表单2（即时验证）</div>
+        <div class="panel-body">
+            <form class="form-horizontal" name="form2">
+                <div class="col-md-12">
+                    <div class="form-group required">
+                        <label for="item1" class="col-md-2 control-label">itemA</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" name="itemA" id="itemA"
+                                   placeholder="只能中英文、数字、点号和下划线"
+                                   ng-model="formData.itemA" ng-change="isExistItemA()"
+                                   ng-pattern="/^[.a-zA-Z0-9_\u4e00-\u9fa5]+$/" required>
+                        </div>
+                        <span ng-if="form2.itemA.$dirty && form2.itemA.$error.pattern" class="col-md-4 form-control-static text-danger">
+                            itemA格式不正确
+                        </span>
+                        <span ng-if="viewData.existItemA" class="col-md-4 form-control-static text-danger">
+                            itemA已存在相同值
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="item2" class="col-md-2 control-label">itemB</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" name="itemB" id="itemB" placeholder="最大长度为5"
+                                   ng-model="formData.itemB" ng-maxlength="5">
+                        </div>
+                        <span ng-if="form2.itemB.$error.maxlength" class="col-md-4 form-control-static text-danger">
+                            itemB不能超过5个字符
+                        </span>
+                    </div>
+                    <div class="form-group required">
+                        <label for="item3" class="col-md-2 control-label">itemC</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" name="itemC" id="itemC" placeholder="只能是数字"
+                                   ng-model="formData.itemC" ng-change="isExistItemC()"
+                                   ng-pattern="/^[0-9]+$/" required>
+                        </div>
+                        <span ng-if="form2.itemC.$dirty && form2.itemC.$error.pattern"
+                              class="col-md-4 form-control-static text-danger">
+                            itemC格式不正确
+                        </span>
+                        <span ng-if="viewData.existItemC" class="col-md-4 form-control-static text-danger">
+                            itemC已存在相同值
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" class="btn btn-primary" ng-click="save()"
+                                    ng-disabled="form2.$invalid || viewData.formErr">
+                                Submit
+                            </button>
+                        </div>
                     </div>
                 </div>
             </form>

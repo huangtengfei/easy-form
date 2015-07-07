@@ -4,6 +4,18 @@
     left: 550px;
 }
 
+.required label:before {
+    position: relative;
+    top: 3px;
+    right: 8px;
+    color: #f00;
+    content: '*';
+}
+
 .item-height {
-    height: 800px;
+    height: 200px;
+}
+
+.mt20 {
+    margin-top: 20px;
 }
