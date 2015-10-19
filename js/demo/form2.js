@@ -9,6 +9,15 @@ angular.module("ef.demo").controller("Form2Ctrl", ["$scope", function($scope){
     vd.existItemA = false;
     vd.existItemC = false;
     vd.formErr = false;
+    vd.options = [
+        {
+            value: 'aa',
+            name: '第一项'
+        },{
+            value: 'bb',
+            name: '第二项'
+        }
+    ]
 
     $scope.isExistItemA = function(){
         vd.existItemA = false;

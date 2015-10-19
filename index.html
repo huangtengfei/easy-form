@@ -104,7 +104,7 @@
                             itemB不能超过5个字符
                         </span>
                     </div>
-                    <div class="form-group required">
+                    <div class="form-group">
                         <label for="item3" class="col-md-2 control-label">itemC</label>
                         <div class="col-md-6">
                             <input type="text" class="form-control" name="itemC" id="itemC" placeholder="只能是数字"
@@ -117,6 +117,18 @@
                         </span>
                         <span ng-if="viewData.existItemC" class="col-md-4 form-control-static text-danger">
                             itemC已存在相同值
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">itemD</label>
+                        <div class="col-md-6">
+                            <select name="mySelect" class="form-control" ng-model="formData.mySelect" required
+                                    ng-options="a.name for a in viewData.options">
+                                <option value="">请选择</option>
+                            </select>
+                        </div>
+                        <span ng-if="form2.itemB.$error.maxlength" class="col-md-4 form-control-static text-danger">
+                            itemB不能超过5个字符
                         </span>
                     </div>
                     <div class="form-group">
